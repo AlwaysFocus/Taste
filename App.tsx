@@ -3,10 +3,14 @@ import { StyleSheet, Text, View } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import React, { useState } from "react";
+import {enableScreens} from 'react-native-screens'
 
 import Navigator from "./navigation/Navigator";
 import { NativeBaseProvider } from "native-base";
 import AppBar from "./components/AppBar";
+
+// Enables native screens for improved performance
+enableScreens();
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -33,7 +37,7 @@ export default function App() {
 
   return (
     <NativeBaseProvider>
-      <AppBar />
+      {/* <AppBar /> */}
       <Navigator />
     </NativeBaseProvider>
   );
