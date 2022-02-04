@@ -25,13 +25,13 @@ const MealItem = (props: any) => {
 
   return (
     <View style={styles.mealItem}>
-      <TouchableComponent style={{ flex: 1 }} onPress={onSelectMeal}>
-        <View style={{flex: 1 }}>
+      <TouchableComponent style={styles.touchable} onPress={onSelectMeal}>
+        <View style={styles.rowContainer}>
           <View style={{ ...styles.mealRow, ...styles.mealHeader }}>
-            <Text>{props.meal.title}</Text>
+            <Text style={styles.title}>{props.meal.title}</Text>
           </View>
           <View style={{ ...styles.mealRow, ...styles.mealDetails }}>
-              <Text>{props.meal.duration} min</Text>
+            <Text style={styles.duration}>{props.meal.duration} min</Text>
           </View>
         </View>
       </TouchableComponent>
@@ -40,6 +40,19 @@ const MealItem = (props: any) => {
 };
 
 const styles = StyleSheet.create({
+  rowContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+    
+  },
+  touchable: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    
+  },
   container: {
     flex: 1,
     borderRadius: 10,
@@ -54,13 +67,14 @@ const styles = StyleSheet.create({
   },
   mealRow: {
     flexDirection: "row",
-    width: '100%'
+    flex: 1,
+    
   },
   mealItem: {
     height: 200,
     backgroundColor: Colors.mediumBlue,
     padding: 20,
-    margin: 20,
+    margin: 10,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
@@ -69,14 +83,24 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 10,
     elevation: 10,
-    flex: 1
+    flex: 1,
   },
   mealHeader: {
-      height: '80%',
+    height: "80%",
+   
   },
   mealDetails: {
-      
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
   },
+  title: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 20
+  },
+  duration: {
+    fontFamily: 'Roboto-Light',
+    fontSize: 20
+  }
 });
 
 export default MealItem;
