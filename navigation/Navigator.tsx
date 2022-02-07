@@ -6,7 +6,11 @@ import {
   createBottomTabNavigator,
   BottomTabBarProps,
 } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  NavigationContainer,
+  NavigationContainerProps,
+} from "@react-navigation/native";
 import React, { useState } from "react";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -18,11 +22,13 @@ import Colors from "../constants/Colors";
 import NavHeaderButton from "../components/HeaderButton";
 import { Platform } from "react-native";
 import FavoritesScreen from "../screens/FavoritesScreen";
+import FilterScreen from "../screens/FilterScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
-const RecipeStackNavigator = (props: any) => {
+const RecipeStackNavigator = ({ navigation }: any, props: any) => {
   const [starIcon, setStarIcon] = useState("ios-star-outline");
 
   const setFavoriteIcon = () => {
@@ -39,6 +45,15 @@ const RecipeStackNavigator = (props: any) => {
           backgroundColor: Colors.lightGrey,
         },
         headerTintColor: "black",
+        headerLeft: () => (
+          <HeaderButtons HeaderButtonComponent={NavHeaderButton}>
+            <Item
+              title="Menu"
+              iconName="ios-menu"
+              onPress={navigation.openDrawer}
+            />
+          </HeaderButtons>
+        ),
       }}
     >
       <Stack.Screen
@@ -78,7 +93,7 @@ const RecipeStackNavigator = (props: any) => {
   );
 };
 
-const FavoritesStackNavigator = (props: any) => {
+const FavoritesStackNavigator = ({ navigation }: any, props: any) => {
   const [starIcon, setStarIcon] = useState("ios-star-outline");
 
   const setFavoriteIcon = () => {
@@ -92,6 +107,17 @@ const FavoritesStackNavigator = (props: any) => {
     <Stack.Navigator
       name="Favorites"
       component={FavoritesScreen}
+      screenOptions={{
+        headerLeft: () => (
+          <HeaderButtons HeaderButtonComponent={NavHeaderButton}>
+            <Item
+              title="Menu"
+              iconName="ios-menu"
+              onPress={navigation.openDrawer}
+            />
+          </HeaderButtons>
+        ),
+      }}
       options={{
         headerShown: true,
         headerStyle: {
@@ -105,7 +131,7 @@ const FavoritesStackNavigator = (props: any) => {
         name="FavoriteMeals"
         component={FavoritesScreen}
         options={{
-          title: 'Favorites',
+          title: "Favorites",
           headerShown: true,
           headerStyle: {
             backgroundColor: Colors.lightGrey,
@@ -137,33 +163,86 @@ const FavoritesStackNavigator = (props: any) => {
 
 const TabNavigator = () => {
   return (
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={({ route }) => ({
+        tabBarStyle: { backgroundColor: "white" },
+        headerShown: false,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "Home") {
+            iconName = focused ? "fast-food" : "fast-food-outline";
+          } else if (route.name === "Favorites") {
+            iconName = focused ? "star" : "star-outline";
+          }
+
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: Colors.darkBlue,
+        tabBarInactiveTintColor: "black",
+      })}
+    >
+      <Tab.Screen name="Home" component={RecipeStackNavigator} />
+      <Tab.Screen name="Favorites" component={FavoritesStackNavigator} />
+    </Tab.Navigator>
+  );
+};
+
+const DrawerNavigator = (props: any) => {
+  return (
     <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Home"
+      <Drawer.Navigator
         screenOptions={({ route }) => ({
           tabBarStyle: { backgroundColor: "white" },
           headerShown: false,
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-
-            if (route.name === "Home") {
-              iconName = focused ? "fast-food" : "fast-food-outline";
-            } else if (route.name === "Favorites") {
-              iconName = focused ? "star" : "star-outline";
-            }
-
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: Colors.darkBlue,
-          tabBarInactiveTintColor: "black",
+          drawerStyle: {
+            backgroundColor: Colors.lightGrey
+          }
         })}
       >
-        <Tab.Screen name="Home" component={RecipeStackNavigator} />
-        <Tab.Screen name="Favorites" component={FavoritesStackNavigator} />
-      </Tab.Navigator>
+        <Drawer.Screen
+          name="Recipes"
+          component={TabNavigator}
+          options={{
+            drawerIcon: ({ focused, color, size }) => {
+              // You can return any component that you like here!
+              return (
+                <Ionicons name="ios-restaurant" size={size} color={color} />
+              );
+            },
+          }}
+        />
+        <Drawer.Screen
+          name="Filter"
+          component={FilterScreen}
+          options={({ navigation }) => ({
+            headerShown: true,
+            title: "Filters",
+            headerLeft: (props: any) => (
+              <HeaderButtons HeaderButtonComponent={NavHeaderButton}>
+                <Item
+                  title="Menu"
+                  iconName="ios-menu"
+                  onPress={navigation.openDrawer}
+                />
+              </HeaderButtons>
+            ),
+            headerStyle: {
+              backgroundColor: Colors.lightGrey,
+            },
+            headerTitleStyle: { fontSize: 20, fontFamily: "Roboto-Bold" },
+            headerTintColor: "black",
+            drawerIcon: ({ focused, color, size }) => {
+              // You can return any component that you like here!
+              return <Ionicons name="ios-filter" size={size} color={color} />;
+            },
+          })}
+        />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 };
 
-export default TabNavigator;
+export default DrawerNavigator;
