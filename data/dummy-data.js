@@ -2,18 +2,32 @@ import Category from "../models/Category";
 import Meal from "../models/Meal";
 import Colors from "../constants/Colors";
 
+// export const CATEGORIES = [
+//     new Category('c1', 'Italian', '#f5428d'),
+//     new Category('c2', 'Quick & Easy', '#f54242'),
+//     new Category('c3', 'Hamburgers', '#f5a442'),
+//     new Category('c4', 'German', '#f5d142'),
+//     new Category('c5', 'Light & Lovely', '#368dff'),
+//     new Category('c6', 'Exotic', '#41d95d'),
+//     new Category('c7', 'Breakfast', '#9eecff'),
+//     new Category('c8', 'Asian', '#b9ffb0'),
+//     new Category('c9', 'French', '#ffc7ff'),
+//     new Category('c10', 'Summer', '#47fced')
+  
+// ];
 export const CATEGORIES = [
-    new Category('c1', 'Italian', Colors.lightBlue),
-    new Category('c2', 'Quick & Easy', Colors.mediumBlue),
-    new Category('c3', 'Hamburgers', Colors.mediumBlue),
-    new Category('c4', 'German', Colors.mediumBlue),
-    new Category('c12', 'Light', Colors.mediumBlue),
-    new Category('c13', 'Exotic', Colors.mediumBlue),
-    new Category('c15', 'Breakfast', Colors.mediumBlue),
-    new Category('c18', 'Brunch', Colors.mediumBlue),
-    new Category('c17', 'Asian', Colors.mediumBlue),
-    new Category('c5', 'Irish', Colors.darkBlue)
-]
+  new Category('c1', 'Italian', Colors.lightOrange),
+  new Category('c2', 'Quick & Easy', Colors.lightOrange),
+  new Category('c3', 'Hamburgers', Colors.lightOrange),
+  new Category('c4', 'German', Colors.lightOrange),
+  new Category('c5', 'Light & Lovely', Colors.lightOrange),
+  new Category('c6', 'Exotic', Colors.lightOrange),
+  new Category('c7', 'Breakfast', Colors.lightOrange),
+  new Category('c8', 'Asian', Colors.lightOrange),
+  new Category('c9', 'French', Colors.lightOrange),
+  new Category('c10', 'Summer', Colors.lightOrange)
+
+];
 
 export const MEALS = [
     new Meal(

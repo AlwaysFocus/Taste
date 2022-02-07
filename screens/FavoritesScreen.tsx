@@ -5,7 +5,7 @@ const FavoritesScreen = () => {
 
     return(
         <View style={styles.screen}>
-            <Text>Categories Screen</Text>
+            <Text>Your favorite recipes will show here.</Text>
         </View>
     )
 };

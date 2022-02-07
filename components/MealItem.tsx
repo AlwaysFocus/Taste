@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  ImageBackground,
 } from "react-native";
 import Colors from "../constants/Colors";
 
@@ -26,12 +27,25 @@ const MealItem = (props: any) => {
   return (
     <View style={styles.mealItem}>
       <TouchableComponent style={styles.touchable} onPress={onSelectMeal}>
-        <View style={styles.rowContainer}>
+        <View>
           <View style={{ ...styles.mealRow, ...styles.mealHeader }}>
-            <Text style={styles.title}>{props.meal.title}</Text>
+            <ImageBackground
+              source={{ uri: props.meal.imageUrl }}
+              style={styles.bgImage}
+            >
+              <Text style={styles.title} numberOfLines={1}>
+                {props.meal.title}
+              </Text>
+            </ImageBackground>
           </View>
           <View style={{ ...styles.mealRow, ...styles.mealDetails }}>
-            <Text style={styles.duration}>{props.meal.duration} min</Text>
+            <Text style={styles.mealTagText}>{props.meal.duration}m</Text>
+            <Text style={styles.mealTagText}>
+              {props.meal.complexity.toUpperCase()}
+            </Text>
+            <Text style={styles.mealTagText}>
+              {props.meal.affordability.toUpperCase()}
+            </Text>
           </View>
         </View>
       </TouchableComponent>
@@ -43,40 +57,26 @@ const styles = StyleSheet.create({
   rowContainer: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
-    
+    alignItems: "center",
+  },
+  bgImage: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "flex-end",
   },
   touchable: {
     flex: 1,
     width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    
   },
-  container: {
-    flex: 1,
-    borderRadius: 10,
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 10,
-    padding: 15,
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-  },
+
   mealRow: {
     flexDirection: "row",
-    flex: 1,
-    
   },
   mealItem: {
     height: 200,
-    backgroundColor: Colors.mediumBlue,
-    padding: 20,
+    backgroundColor: Colors.lightOrange,
+    overflow: "hidden",
     margin: 10,
-    justifyContent: "center",
-    alignItems: "center",
     borderRadius: 10,
     shadowColor: "black",
     shadowOpacity: 0.26,
@@ -86,21 +86,26 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   mealHeader: {
-    height: "80%",
-   
+    height: "85%",
   },
   mealDetails: {
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    height: "15%",
   },
   title: {
-    fontFamily: 'Roboto-Medium',
-    fontSize: 20
+    fontFamily: "Roboto-Medium",
+    fontSize: 20,
+    color: "white",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+    textAlign: "center",
   },
-  duration: {
-    fontFamily: 'Roboto-Light',
-    fontSize: 20
-  }
+  mealTagText: {
+    fontFamily: "Roboto-Light",
+    fontSize: 20,
+  },
 });
 
 export default MealItem;

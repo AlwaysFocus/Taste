@@ -5,7 +5,7 @@ import AppLoading from "expo-app-loading";
 import React, { useState } from "react";
 import {enableScreens} from 'react-native-screens'
 
-import Navigator from "./navigation/Navigator";
+import TabNavigator from "./navigation/Navigator";
 import { NativeBaseProvider } from "native-base";
 import AppBar from "./components/AppBar";
 
@@ -38,7 +38,7 @@ export default function App() {
   return (
     <NativeBaseProvider>
       {/* <AppBar /> */}
-      <Navigator />
+      <TabNavigator />
     </NativeBaseProvider>
   );
 }
