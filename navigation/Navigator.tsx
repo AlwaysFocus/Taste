@@ -45,6 +45,7 @@ const RecipeStackNavigator = ({ navigation }: any, props: any) => {
           backgroundColor: Colors.lightGrey,
         },
         headerTintColor: "black",
+        headerShown: true,
         headerLeft: () => (
           <HeaderButtons HeaderButtonComponent={NavHeaderButton}>
             <Item
@@ -198,9 +199,17 @@ const DrawerNavigator = (props: any) => {
           tabBarStyle: { backgroundColor: "white" },
           headerShown: false,
           drawerStyle: {
-            backgroundColor: Colors.lightGrey
-          }
+            backgroundColor: Colors.lightGrey,
+            
+          },
+          drawerActiveTintColor: Colors.lightBlue,
+          drawerLabelStyle: {
+            fontFamily: 'Roboto-Light',
+            fontSize: 20
+          },
+          
         })}
+        
       >
         <Drawer.Screen
           name="Recipes"
