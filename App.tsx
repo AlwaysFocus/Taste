@@ -4,13 +4,22 @@ import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import React, { useState } from "react";
 import {enableScreens} from 'react-native-screens'
+import { createStore, combineReducers } from "redux";
+import {Provider} from "react-redux";
 
 import TabNavigator from "./navigation/Navigator";
 import { NativeBaseProvider } from "native-base";
 import AppBar from "./components/AppBar";
+import MealReducer from "./Redux/reducers/Meals";
 
 // Enables native screens for improved performance
 enableScreens();
+
+const rootReducer = combineReducers({
+  meals: MealReducer
+})
+
+const store = createStore(rootReducer);
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -36,9 +45,11 @@ export default function App() {
   }
 
   return (
+    <Provider store={store}>
     <NativeBaseProvider>
       {/* <AppBar /> */}
       <TabNavigator />
     </NativeBaseProvider>
+    </Provider>
   );
 }

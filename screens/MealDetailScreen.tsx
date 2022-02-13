@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useLayoutEffect } from "react";
 import {
   ScrollView,
   View,
@@ -7,22 +7,64 @@ import {
   Button,
   Image,
 } from "react-native";
-import Colors from "../constants/Colors";
-import { MEALS } from "../data/dummy-data";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector, useDispatch } from "react-redux";
 
+import Colors from "../constants/Colors";
+import { ToggleFavorite } from "../Redux/actions/Meals";
+import NavHeaderButton from "../components/HeaderButton";
 
 const ListItem = (props: any) => {
-    return (
-        <View style={styles.listItem}>
-            <Text>{props.children}</Text>
-        </View>
-    )
-}
+  return (
+    <View style={styles.listItem}>
+      <Text>{props.children}</Text>
+    </View>
+  );
+};
 
-const MealDetailScreen = ({ navigation, route }: any, props: any) => {
+const MealDetailScreen = (
+  { navigation, route, navigation: { setParams } }: any,
+  props: any
+) => {
   const mealId = route.params.mealId;
+  const mealIsFavorite = useSelector((state: any) =>
+    state.meals.favoriteMeals.some((meal: any) => meal.id === mealId)
+  );
+  const availableMeals = useSelector((state: any) => state.meals.meals);
 
-  const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+  const selectedMeal = availableMeals.find((meal: any) => meal.id === mealId);
+
+  const dispatch = useDispatch();
+
+  // Let's trigger the ToggleFavorite action
+  const toggleFavorite = useCallback(() => {
+    dispatch(ToggleFavorite(mealId));
+  }, [dispatch, mealId]);
+
+  useEffect(() => {
+    setParams({ toggleFavorite: toggleFavorite});
+  }, [toggleFavorite]);
+
+  useEffect(() => {
+    setParams({ mealIsFavorite: mealIsFavorite});
+  }, [mealIsFavorite])
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={NavHeaderButton}>
+          <Item
+            title="Favorite"
+            iconName={mealIsFavorite ? "ios-star" : "ios-star-outline"}
+            onPress={toggleFavorite}
+          />
+        </HeaderButtons>
+      ),
+      headerLeft: () => (
+        <Button onPress={() => navigation.goBack()} title="Back" />
+      ),
+    });
+  }, [navigation, mealIsFavorite, toggleFavorite]);
 
   return (
     <ScrollView>
@@ -37,11 +79,11 @@ const MealDetailScreen = ({ navigation, route }: any, props: any) => {
         </Text>
       </View>
       <Text style={styles.title}>Ingredients</Text>
-      {selectedMeal?.ingredients.map((ingredient) => (
+      {selectedMeal?.ingredients.map((ingredient: string) => (
         <ListItem key={ingredient}>{ingredient}</ListItem>
       ))}
       <Text style={styles.title}>Steps</Text>
-      {selectedMeal?.steps.map((step) => (
+      {selectedMeal?.steps.map((step: string) => (
         <ListItem key={step}>{step}</ListItem>
       ))}
     </ScrollView>
@@ -68,14 +110,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   listItem: {
-      marginVertical: 10,
-      marginHorizontal: 20,
-      borderColor: Colors.lightGrey,
-      borderWidth: 2,
-      borderRadius: 5,
-      padding: 10,
-      
-  }
+    marginVertical: 10,
+    marginHorizontal: 20,
+    borderColor: Colors.lightGrey,
+    borderWidth: 2,
+    borderRadius: 5,
+    padding: 10,
+  },
 });
 
 export default MealDetailScreen;

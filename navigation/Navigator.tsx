@@ -29,15 +29,6 @@ const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 const RecipeStackNavigator = ({ navigation }: any, props: any) => {
-  const [starIcon, setStarIcon] = useState("ios-star-outline");
-
-  const setFavoriteIcon = () => {
-    if (starIcon === "ios-star-outline") {
-      setStarIcon("ios-star");
-    } else {
-      setStarIcon("ios-star-outline");
-    }
-  };
   return (
     <Stack.Navigator
       screenOptions={{
@@ -78,15 +69,6 @@ const RecipeStackNavigator = ({ navigation }: any, props: any) => {
         options={({ route }): NativeStackNavigationOptions => ({
           headerTitleStyle: { fontSize: 20, fontFamily: "Roboto-Bold" },
           title: route.params?.name ?? "Meal Details",
-          headerRight: () => (
-            <HeaderButtons HeaderButtonComponent={NavHeaderButton}>
-              <Item
-                title="Favorite"
-                iconName={starIcon}
-                onPress={setFavoriteIcon}
-              />
-            </HeaderButtons>
-          ),
         })}
         component={MealDetailScreen}
       />
@@ -95,15 +77,6 @@ const RecipeStackNavigator = ({ navigation }: any, props: any) => {
 };
 
 const FavoritesStackNavigator = ({ navigation }: any, props: any) => {
-  const [starIcon, setStarIcon] = useState("ios-star-outline");
-
-  const setFavoriteIcon = () => {
-    if (starIcon === "ios-star-outline") {
-      setStarIcon("ios-star");
-    } else {
-      setStarIcon("ios-star-outline");
-    }
-  };
   return (
     <Stack.Navigator
       name="Favorites"
@@ -146,15 +119,6 @@ const FavoritesStackNavigator = ({ navigation }: any, props: any) => {
         options={({ route }): NativeStackNavigationOptions => ({
           headerTitleStyle: { fontSize: 20, fontFamily: "Roboto-Bold" },
           title: route.params?.name ?? "Meal Details",
-          headerRight: () => (
-            <HeaderButtons HeaderButtonComponent={NavHeaderButton}>
-              <Item
-                title="Favorite"
-                iconName={starIcon}
-                onPress={setFavoriteIcon}
-              />
-            </HeaderButtons>
-          ),
         })}
         component={MealDetailScreen}
       />
@@ -200,16 +164,13 @@ const DrawerNavigator = (props: any) => {
           headerShown: false,
           drawerStyle: {
             backgroundColor: Colors.lightGrey,
-            
           },
           drawerActiveTintColor: Colors.lightBlue,
           drawerLabelStyle: {
-            fontFamily: 'Roboto-Light',
-            fontSize: 20
+            fontFamily: "Roboto-Light",
+            fontSize: 20,
           },
-          
         })}
-        
       >
         <Drawer.Screen
           name="Recipes"
@@ -226,7 +187,7 @@ const DrawerNavigator = (props: any) => {
         <Drawer.Screen
           name="Filter"
           component={FilterScreen}
-          options={({ navigation }) => ({
+          options={({ navigation, route }: any) => ({
             headerShown: true,
             title: "Filters",
             headerLeft: (props: any) => (
@@ -235,6 +196,17 @@ const DrawerNavigator = (props: any) => {
                   title="Menu"
                   iconName="ios-menu"
                   onPress={navigation.openDrawer}
+                />
+              </HeaderButtons>
+            ),
+            headerRight: (props: any) => (
+              <HeaderButtons HeaderButtonComponent={NavHeaderButton}>
+                <Item
+                  title="Save"
+                  iconName="ios-save"
+                  onPress={() => {
+                    route.params.save();
+                  }}
                 />
               </HeaderButtons>
             ),
