@@ -1,50 +1,42 @@
 import React from "react";
-import { Badge, Box, HStack, VStack, Center, Text } from "native-base";
+import { Badge, Box, HStack, VStack, Center, Text, Heading, Image } from "native-base";
+import ProfilePicture from "./ProfilePicture";
+import InfoBadge from "./InfoBadge";
+
+
 
 const MainHeader = (props: any) => {
   return (
-    // <Box flex={1} justifyContent="center" alignItems="center" h={200} w="100%">
-    //   <VStack>
-    //     <Box
-    //       flex={1}
-    //       w="100%"
-    //       justifyContent="center"
-    //       alignItems="center"
-    //       bgColor="white"
-    //     >
-    //       {/* <ProfilePicture /> */}
-    //       {/* <UserName /> */}
-    //       <VStack>
-    //         <HStack bgColor="white">
-    //           <Box flex={1} flexDirection="row" justifyContent="center" alignItems="center" w="80%">
-    //             <Badge padding={25}>27 / 128 Exp</Badge>
-    //             <Badge padding={25}> 12 Utensils Used</Badge>
-    //           </Box>
-    //         </HStack>
-    //         <HStack>
-    //           <Box flex={1} justifyContent="center" alignItems="center" w="80%">
-    //             <Badge bgColor="black">Cool stuff</Badge>
-    //             <Badge bgColor="amber.600">Cool</Badge>
-    //           </Box>
-    //         </HStack>
-    //       </VStack>
-    //     </Box>
-    //   </VStack>
-    // </Box>
+    
 
-        <Box w="full" h="1/3" bgColor="blueGray.400" borderRadius="xl">
-            <VStack w="full">
-                <HStack w="full" justifyContent="center" alignItems="center">
-                <Badge padding={2} margin={5} borderRadius="xl">27 / 128 Exp</Badge>
-                <Badge padding={2} margin={5} borderRadius="xl"> 12 Utensils Used</Badge>
-                </HStack>
-                <HStack w="full" justifyContent="center" alignItems="center">
-                <Badge padding={2} margin={5} borderRadius="xl">27 / 128 Exp</Badge>
-                <Badge padding={2} margin={5} borderRadius="xl"> 12 Utensils Used</Badge>
-                </HStack>
-            </VStack>
-            
-        </Box>
+    <Box w="full" h="32%" bgColor="blueGray.400" borderRadius="xl">
+      <VStack w="full">
+        <Center marginY={3}>
+          <ProfilePicture
+            size="lg"
+            uri="https://thumbs.dreamstime.com/b/sushi-character-vector-fun-japaneseemotions-food-cute-face-illustration-japanese-comic-seafood-cuisine-77021165.jpg"
+            userInitials="EW"
+          />
+          
+         
+          {/* User Title Badge */}
+          <Text paddingTop={1}>Accomplished Chef</Text>
+          
+           {/* Chef + user name */}
+           <Heading paddingY={1}>Chef Eli</Heading>
+          {/* User Chef Level */}
+          <Text>Level 5 Chef</Text>
+        </Center>
+        <HStack w="full" justifyContent="space-evenly" alignItems="center">
+          <InfoBadge title="Exp" badgeContent="27 / 128"/>
+          <InfoBadge title="Utensils Used" badgeContent="12" />
+        </HStack>
+        <HStack w="full" justifyContent="space-evenly" alignItems="center" marginTop={5}>
+        <InfoBadge title="Recipes Unlocked" badgeContent="25 / 270" />
+          <InfoBadge title="Recipes Cooked" badgeContent="13 / 270" />
+        </HStack>
+      </VStack>
+    </Box>
   );
 };
 
