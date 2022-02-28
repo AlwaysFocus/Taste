@@ -12,6 +12,7 @@ import { NativeBaseProvider } from "native-base";
 import AppBar from "./components/AppBar";
 import MealReducer from "./Redux/reducers/Meals";
 import HomeScreen from "./screens/HomeScreen";
+import Navigation from "./navigation/Navigation";
 
 // Enables native screens for improved performance
 enableScreens();
@@ -48,9 +49,11 @@ export default function App() {
   return (
     <Provider store={store}>
     <NativeBaseProvider>
+    <StatusBar style='dark'/>
       {/* <AppBar /> */}
       {/* <TabNavigator /> // Current Main Component */}
-      <HomeScreen />
+      {/* <HomeScreen /> */}
+      <Navigation />
     </NativeBaseProvider>
     </Provider>
   );
