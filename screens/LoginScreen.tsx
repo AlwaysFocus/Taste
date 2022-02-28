@@ -18,7 +18,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "../Firebase";
-import { set } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -30,7 +29,8 @@ const LoginScreen = (props: any) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        navigation.navigate("Home");
+        // Weird bug in this version that makes us cast the string as a 'never'
+        navigation.navigate("HomeTabNav" as never);
       }
     });
 

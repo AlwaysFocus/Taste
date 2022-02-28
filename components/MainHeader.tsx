@@ -7,9 +7,7 @@ import InfoBadge from "./InfoBadge";
 
 const MainHeader = (props: any) => {
   return (
-    
-
-    <Box w="full" h="32%" bgColor="blueGray.400" borderRadius="xl">
+    <Box w="full" bgColor="blueGray.400" borderRadius="xl">
       <VStack w="full">
         <Center marginY={3}>
           <ProfilePicture
@@ -27,14 +25,14 @@ const MainHeader = (props: any) => {
           {/* User Chef Level */}
           <Text>Level 5 Chef</Text>
         </Center>
-        <HStack w="full" justifyContent="space-evenly" alignItems="center">
+        {/* <HStack w="full" justifyContent="space-evenly" alignItems="center">
           <InfoBadge title="Exp" badgeContent="27 / 128"/>
           <InfoBadge title="Utensils Used" badgeContent="12" />
         </HStack>
         <HStack w="full" justifyContent="space-evenly" alignItems="center" marginTop={5}>
         <InfoBadge title="Recipes Unlocked" badgeContent="25 / 270" />
           <InfoBadge title="Recipes Cooked" badgeContent="13 / 270" />
-        </HStack>
+        </HStack> */}
       </VStack>
     </Box>
   );
